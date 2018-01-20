@@ -4,6 +4,8 @@ import random
 from time import sleep
 from tb_wannabe_info import work_list
 
+from numpy.random import choice
+
 tweet_template = " de demain sera {}, {} !"
 
 begins = {
@@ -18,12 +20,15 @@ begins = {
 
 ends = ('informaticien', 'informaticienne')
 
+order = [(1, 0), (0, 1)]
+
 def loop(api, sleep_time):
     while True:
         try:
             work = random.choice(work_list)
             begin = begins.get(work[0][0], ('le', 'la'))
-            who_first = random.choices([(1, 0), (0, 1)], weights=[0.6, 0.4])[0]
+            v = choice(len(order), 1, p=[0.6, 0.4])
+            who_first = order[choice(len(order), 1, p=[0.6, 0.4])[0]]
             
             if begin[0] == 'l\'':
                 if work[0] == work[1]:
